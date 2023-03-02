@@ -22,6 +22,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             <main>
                 <Routes>
                     <Route path="" view=|cx| view! { cx, <HomePage/> }/>
+                    <Route path="2" view=|cx| view! { cx, <HomePage2/> }/>
                 </Routes>
             </main>
         </Router>
@@ -37,5 +38,16 @@ fn HomePage(cx: Scope) -> impl IntoView {
     view! { cx,
         <h1>"Welcome to Leptos!"</h1>
         <button on:click=inc>"Click Me: " {count}</button>
+    }
+}
+
+#[component]
+fn HomePage2(cx: Scope) -> impl IntoView {
+    // Creates a reactive value to update the button
+    let (count, set_count) = create_signal(cx, 0);
+    let inc = move |_| set_count.update(|count| *count -= 1);
+    view! { cx,
+        <h1>"Welcome to Leptos!"</h1>
+        <button on:click=inc>"Dont Click Me: " {count}</button>
     }
 }
